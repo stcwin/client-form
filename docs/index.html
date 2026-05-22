@@ -202,6 +202,8 @@
  <option value="咨询">咨询</option>
  <option value="维修">维修</option>
  <option value="保养">保养</option>
+ <option value="年检">年检</option>
+ <option value="保险">保险</option>
  <option value="其他">其他</option>
  </select>
  <div class="error-text">请选择服务类型</div>
@@ -226,8 +228,8 @@
  // 飞书多维表格配置
  const FEISHU_APP_ID = 'cli_aa9ab713b7679cd5';
  const FEISHU_APP_SECRET = 'U3he3y9ZVkukQxk7xlunYcq6mGOrN0ud';
- const FEISHU_APP_TOKEN = 'HhhdbQH6BaQbe9siIhkcFtUjnrf';
- const FEISHU_TABLE_ID = 'tblXawqPfcGgBfj7';
+ const FEISHU_APP_TOKEN = 'WoSnbtieXarKdps7LlJc2SL8nwc';
+ const FEISHU_TABLE_ID = 'tblPPPrhH3tkWMMr';
 
  async function getFeishuToken() {
    const response = await fetch('https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal', {
