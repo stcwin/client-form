@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ <title>客户信息登记</title>
+ <meta name="description" content="客户信息快速登记，自动同步飞书表格">
+ <meta name="theme-color" content="#667eea">
+ <meta name="apple-mobile-web-app-capable" content="yes">
+ <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+ <meta name="apple-mobile-web-app-title" content="客户登记">
+ <style>
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
+
+ body {
+ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ min-height: 100vh;
+ padding: 20px;
+ }
+
+ .container {
+ max-width: 480px;
+ margin: 0 auto;
+ }
+
+ .header {
+ text-align: center;
+ color: white;
+ margin-bottom: 30px;
+ }
+
+ .header h1 {
+ font-size: 24px;
+ margin-bottom: 8px;
+ }
+
+ .header p {
+ font-size: 14px;
+ opacity: 0.9;
+ }
+
+ .form-card {
+ background: white;
+ border-radius: 16px;
+ padding: 24px;
+ box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+ }
+
+ .form-group {
+ margin-bottom: 20px;
+ }
+
+ .form-group label {
+ display: block;
+ font-size: 14px;
+ font-weight: 600;
+ color: #333;
+ margin-bottom: 8px;
+ }
+
+ .form-group label span {
+ color: #ff4d4f;
+ }
+
+ .form-group input,
+ .form-group select {
+ width: 100%;
+ padding: 12px 16px;
+ font-size: 16px;
+ border: 2px solid #e8e8e8;
+ border-radius: 10px;
+ transition: all 0.3s;
+ outline: none;
+ }
+
+ .form-group input:focus,
+ .form-group select:focus {
+ border-color: #667eea;
+ box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+ }
+
+ .form-group input::placeholder {
+ color: #999;
+ }
+
+ .submit-btn {
+ width: 100%;
+ padding: 14px;
+ font-size: 16px;
+ font-weight: 600;
+ color: white;
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ border: none;
+ border-radius: 10px;
+ cursor: pointer;
+ transition: all 0.3s;
+ }
+
+ .submit-btn:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+ }
+
+ .submit-btn:active {
+ transform: translateY(0);
+ }
+
+ .submit-btn:disabled {
+ background: #ccc;
+ cursor: not-allowed;
+ transform: none;
+ box-shadow: none;
+ }
+
+ .success-msg {
+ display: none;
+ text-align: center;
+ padding: 40px 20px;
+ }
+
+ .success-msg .icon {
+ font-size: 60px;
+ margin-bottom: 16px;
+ }
+
+ .success-msg h2 {
+ color: #52c41a;
+ font-size: 20px;
+ margin-bottom: 8px;
+ }
+
+ .success-msg p {
+ color: #666;
+ font-size: 14px;
+ }
+
+ .form-content {
+ display: block;
+ }
+
+ .form-content.hidden {
+ display: none;
+ }
+
+ .success-msg.show {
+ display: block;
+ }
+
+ .error-text {
+ color: #ff4d4f;
+ font-size: 12px;
+ margin-top: 6px;
+ display: none;
+ }
+
+ .form-group.error input,
+ .form-group.error select {
+ border-color: #ff4d4f;
+ }
+
+ .form-group.error .error-text {
+ display: block;
+ }
+ </style>
+</head>
+<body>
+ <div class="container">
+ <div class="header">
+ <h1>📋 客户信息登记</h1>
+ <p>请填写以下信息</p>
+ </div>
+
+ <div class="form-card">
+ <form id="clientForm" class="form-content">
+ <div class="form-group">
+ <label>姓名 <span>*</span></label>
+ <input type="text" id="name" name="name" placeholder="请输入您的姓名" required>
+ <div class="error-text">请输入姓名</div>
+ </div>
+
+ <div class="form-group">
+ <label>手机号 <span>*</span></label>
+ <input type="tel" id="phone" name="phone" placeholder="请输入手机号" required>
+ <div class="error-text">请输入有效的手机号</div>
+ </div>
+
+ <div class="form-group">
+ <label>车牌号 <span>*</span></label>
+ <input type="text" id="plate" name="plate" placeholder="请输入车牌号，如：粤B12345" required>
+ <div class="error-text">请输入车牌号</div>
+ </div>
+
+ <div class="form-group">
+ <label>服务类型 <span>*</span></label>
+ <select id="service" name="service" required>
+ <option value="">请选择服务类型</option>
+ <option value="洗车">洗车</option>
+ <option value="保养">保养</option>
+ <option value="维修">维修</option>
+ <option value="年检">年检</option>
+ <option value="保险">保险</option>
+ <option value="其他">其他</option>
+ </select>
+ <div class="error-text">请选择服务类型</div>
+ </div>
+
+ <button type="submit" class="submit-btn" id="submitBtn">提交信息</button>
+ </form>
+
+ <div class="success-msg" id="successMsg">
+ <div class="icon">✅</div>
+ <h2>提交成功！</h2>
+ <p>感谢您的填写，我们尽快与您联系</p>
+ </div>
+ </div>
+ </div>
+
+ <script>
+ const form = document.getElementById('clientForm');
+ const submitBtn = document.getElementById('submitBtn');
+ const successMsg = document.getElementById('successMsg');
+
+ // 飞书多维表格配置
+ const FEISHU_APP_TOKEN = '请填写您的飞书AppToken';
+ const FEISHU_TABLE_ID = '请填写您的飞书TableId';
+
+ function validatePhone(phone) {
+ return /^1[3-9]\d{9}$/.test(phone);
+ }
+
+ function validatePlate(plate) {
+ return /^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z0-9]{5}$/.test(plate);
+ }
+
+ form.addEventListener('submit', async function(e) {
+ e.preventDefault();
+
+ const name = document.getElementById('name').value.trim();
+ const phone = document.getElementById('phone').value.trim();
+ const plate = document.getElementById('plate').value.trim().toUpperCase();
+ const service = document.getElementById('service').value;
+
+ let hasError = false;
+
+ if (!name) {
+ document.getElementById('name').parentElement.classList.add('error');
+ hasError = true;
+ } else {
+ document.getElementById('name').parentElement.classList.remove('error');
+ }
+
+ if (!validatePhone(phone)) {
+ document.getElementById('phone').parentElement.classList.add('error');
+ hasError = true;
+ } else {
+ document.getElementById('phone').parentElement.classList.remove('error');
+ }
+
+ if (!plate) {
+ document.getElementById('plate').parentElement.classList.add('error');
+ hasError = true;
+ } else {
+ document.getElementById('plate').parentElement.classList.remove('error');
+ }
+
+ if (!service) {
+ document.getElementById('service').parentElement.classList.add('error');
+ hasError = true;
+ } else {
+ document.getElementById('service').parentElement.classList.remove('error');
+ }
+
+ if (hasError) return;
+
+ submitBtn.disabled = true;
+ submitBtn.textContent = '提交中...';
+
+ try {
+ const response = await fetch(`https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_APP_TOKEN}/tables/${FEISHU_TABLE_ID}/records`, {
+ method: 'POST',
+ headers: {
+ 'Content-Type': 'application/json',
+ },
+ body: JSON.stringify({
+ fields: {
+ '姓名': name,
+ '手机号': phone,
+ '车牌号': plate,
+ '服务': service
+ }
+ })
+ });
+
+ const result = await response.json();
+
+ if (result.code === 0) {
+ form.classList.add('hidden');
+ successMsg.classList.add('show');
+ } else {
+ alert('提交失败，请稍后重试');
+ submitBtn.disabled = false;
+ submitBtn.textContent = '提交信息';
+ }
+ } catch (error) {
+ console.error('Error:', error);
+ alert('网络错误，请检查网络连接');
+ submitBtn.disabled = false;
+ submitBtn.textContent = '提交信息';
+ }
+ });
+ </script>
+</body>
+</html>
