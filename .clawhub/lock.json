@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "eastmoney-stock": {
+      "version": "1.0.0",
+      "installedAt": 1778926551101
+    },
+    "china-stock-analysis": {
+      "version": "1.0.0",
+      "installedAt": 1778930793535
+    },
+    "programming-assistant": {
+      "version": "1.0.0",
+      "installedAt": 1779009648654
+    },
+    "skill-creator": {
+      "version": "0.1.0",
+      "installedAt": 1779009658017
+    },
+    "shenmeng-long-term-memory": {
+      "version": "2025.4.15",
+      "installedAt": 1779162431055
+    },
+    "self-improving-agent": {
+      "version": "3.0.21",
+      "installedAt": 1779414417904
+    }
+  }
+}

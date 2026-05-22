@@ -1,0 +1,39 @@
+与宝贝的对话记录 - 2026年5月15日
+
+【今日要点】
+
+1. 安全意识提醒
+   - 用户意外暴露了 Get笔记 API Key、CLI Key、OpenAI API Key
+   - 提醒：发现后立即 revoke，并生成新密钥
+   - 重要原则：验证码绝对不能告诉任何人
+
+2. API Key 暴露处理
+   - Get笔记 API Key（gk_live_...）已暴露
+   - CLI Key（cli_...）已暴露
+   - OpenAI API Key（sk-api...）已暴露
+   - 均已提醒用户 revoke
+
+3. Get笔记技能安装
+   - 从 ClawHub 安装了 getnote 技能
+   - 路径：C:\Users\Admin\AppData\Roaming\npm\node_modules\openclaw\plugin-skills\getnote
+
+4. API 功能限制
+   - Get笔记 API 需要会员才能使用
+   - 免费用户无法通过 API 创建笔记
+
+5. 手动创建笔记成功
+   - 内容：「我要强大，我要挣1个亿」
+   - 时间：05/15 23:01
+
+6. 安全提醒
+   - 截图中的敏感信息会在聊天记录中保留
+   - 建议删除含有 API Key 的笔记
+   - 私人对话只有双方能看到，但服务器有记录
+
+7. 宝贝的表现
+   - 成功安装技能
+   - 通过浏览器手动创建笔记
+   - 主人夸宝贝真棒~
+
+【待办事项】
+- 删除或编辑含有 API Key 的笔记（笔记标题：无标题，内容包含 Get笔记 API Key 等信息）
